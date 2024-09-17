@@ -24,27 +24,27 @@ XAcceleration = np.zeros((Iterations, Steps))
 YVelocity = np.zeros((Iterations, Steps))
 XVelocity = np.zeros((Iterations, Steps))
 KConstant = np.zeros((Iterations))
-KSteps = 0.02
+KSteps = 0.00125
 Gravity = 10
 
 for i in range(Iterations):
     Time[0] = 0
-    KConstant[i] = 0.65 - (KSteps * ( i + 1 ))
-    KConstant[i] = round(KConstant[i],2)
+    KConstant[i] = 0.105 + (KSteps * ( i + 1 ))
+    KConstant[i] = round(KConstant[i],5)
     YPosition[i][0] = 0
     XPosition[i][0] = 0
     YVelocity[i][0] = Vyi
     XVelocity[i][0] = Vxi
-    XAcceleration[i][0] = -KConstant[i] * XVelocity[i][0] / Mass
-    YAcceleration[i][0] = -KConstant[i] * YVelocity[i][0] / Mass - Gravity
+    XAcceleration[i][0] = -KConstant[i] * XVelocity[i][0]
+    YAcceleration[i][0] = -KConstant[i] * YVelocity[i][0] - Gravity
     for j in range(1,Steps):
         Time[j] = j * dT
         YPosition[i][j] = YPosition[i][j-1] + YVelocity[i][j-1] * dT
         YVelocity[i][j] = YVelocity[i][j-1] + YAcceleration[i][j-1] * dT
-        YAcceleration[i][j] = -KConstant[i] * YVelocity[i][0] / Mass - Gravity
+        YAcceleration[i][j] = -KConstant[i] * YVelocity[i][0] - Gravity
         XPosition[i][j] = XPosition[i][j-1] + XVelocity[i][j-1] * dT
         XVelocity[i][j] = XVelocity[i][j-1] + XAcceleration[i][j-1] * dT
-        XAcceleration[i][j] = -KConstant[i] * XVelocity[i][0] / Mass
+        XAcceleration[i][j] = -KConstant[i] * XVelocity[i][0]
         if(YPosition[i][j] < 0):
             print(KConstant[i], XPosition[i][j])
             break
@@ -56,6 +56,6 @@ plt.legend(KConstant)
 plt.title('Projectile Motion')
 plt.ylabel('Position (m)')
 plt.xlabel('Position (x)')
-plt.figtext(0.25, 0.7, 'For d = 142, k = 0.57')
+plt.figtext(0.25, 0.7, 'For d = 142, k = 0.11375')
 plt.savefig(Directory + '/2-55_ProjectileMotion')
 plt.show()
