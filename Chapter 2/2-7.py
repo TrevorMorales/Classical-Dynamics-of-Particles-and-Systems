@@ -69,7 +69,6 @@ for i in range(Steps):
 for i in range(Steps):
     XPosition[i] = XPosition[i] - Offset - 30
 
-print("Distance Between Landing Positions of Bales", Offset+30)
 
 plt.plot(XPosition, YPosition, label = 'Air Resistance')
 plt.plot(XWithoutAirResistance,YWithoutAirResistance, label = 'Without Air Resistance')
@@ -78,5 +77,6 @@ plt.xlabel("Position (m)")
 plt.ylabel("Position (m)")
 plt.title("Hay Bales Landing Simultaneously")
 plt.legend()
+plt.figtext(0.15,0.25,"Distance Between Release/Landing\n Positions of Bales = " + str(round(Offset+30,4)))
 plt.savefig(Directory + '/2-7_Simultaneous_Landing')
 plt.show()
