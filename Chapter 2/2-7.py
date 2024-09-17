@@ -41,8 +41,10 @@ XPosition[0], YPosition[0] = XStartPosition,PlaneHeight
 
 for i in range(Steps):
     if (not i == 0):
-        XAcceleration = - ( DragCoefficient / HayBaleMass ) * XVelocity * XVelocity
-        YAcceleration = -Gravity - ( DragCoefficient / HayBaleMass ) * YVelocity * YVelocity
+        XDrag = 0.5 * DragCoefficient * AirDensity * HayBaleSurfaceArea * XVelocity * XVelocity
+        XAcceleration = - (XDrag / HayBaleMass)
+        YDrag = 0.5 * DragCoefficient * AirDensity * HayBaleSurfaceArea * YVelocity * YVelocity
+        YAcceleration = -Gravity - ( YDrag / HayBaleMass )
         XVelocity = XVelocity + XAcceleration * TimeStep
         YVelocity = YVelocity + YAcceleration * TimeStep
         XPosition[i] = XPosition[i-1] + XVelocity * TimeStep
