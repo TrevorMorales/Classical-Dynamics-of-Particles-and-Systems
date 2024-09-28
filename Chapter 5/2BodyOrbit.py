@@ -7,7 +7,7 @@ MassA = 1e-8
 RadiusJ = 5.2
 RadiusA = 3.0
 
-Steps = 10000
+Steps = 10000000
 dT = 1.0/1000.0
 
 for i in range(1):
@@ -25,49 +25,35 @@ for i in range(1):
     AYVelocity = AOrbitalSpeed
 
     for j in range(Steps - 1):
-        print("Keep Going From Here")
+        RadiusJ = np.sqrt(JXPosition[j]**2 + JYPosition[j]**2)
+        RadiusA = np.sqrt(AXPosition[j]**2 + AYPosition[j]**2)
+        Distance = np.sqrt((JXPosition[j] - AXPosition[j])**2 + (JYPosition[j] - AYPosition[j])**2)
 
-for k in range(1):
+        JSunAcceleration = -(NaturalG) / (RadiusJ**2)
+        JAAcceleration = -(NaturalG * MassA) / (Distance)
 
-    Steps = 1000 * (10**(k+1))
-    dT = 1 / (100 * (10**(k+1)))
+        ASunAcceleration = -(NaturalG) / (RadiusA**2)
+        AJAcceleration = -(NaturalG * MassJ) / (Distance)
 
-    for i in range(3):
-        Radius = 1.5 * (i + 1)
-        XPosition = np.zeros(Steps)
-        YPosition = np.zeros(Steps)
-        XPosition[0] = Radius
-        OrbitalSpeed = np.sqrt(NaturalG / Radius)
-        XVelocity = 0
-        YVelocity = OrbitalSpeed
-        
-        TotalEnergy = ( np.sqrt(XVelocity**2 + YVelocity**2) / 2.0 ) + ( NaturalG / Radius ) # Natural Units, per unit mass
-        # print("Total Energy Before Sim:", str(TotalEnergy))
-        # Same as the end, pretty much
+        JXAcceleration = JSunAcceleration * (JXPosition[j] / RadiusJ) + JAAcceleration * ((JXPosition[j] - AXPosition[j]) / Distance)
+        JYAcceleration = JSunAcceleration * (JYPosition[j] / RadiusJ) + JAAcceleration * ((JYPosition[j] - AYPosition[j]) / Distance)
 
-        for j in range(Steps - 1):
-            Radius = np.sqrt(XPosition[j]**2 + YPosition[j]**2)
-            Acceleration = -(NaturalG) / (Radius**2)
-            
-            XAcceleration = Acceleration * (XPosition[j] / Radius)
-            YAcceleration = Acceleration * (YPosition[j] / Radius)
-            
-            XVelocity += XAcceleration * dT
-            YVelocity += YAcceleration * dT
-            
-            XPosition[j+1] = XPosition[j] + XVelocity * dT
-            YPosition[j+1] = YPosition[j] + YVelocity * dT
-        
-        TotalEnergy = ( np.sqrt(XVelocity**2 + YVelocity**2) / 2.0 ) + ( NaturalG / Radius ) # Natural Units, per unit mass
-        # print("Total Energy After Sim:", str(TotalEnergy))
-        # They're basically identical
+        AXAcceleration = ASunAcceleration * (AXPosition[j] / RadiusA) + AJAcceleration * ((AXPosition[j] - JXPosition[j]) / Distance)
+        AYAcceleration = ASunAcceleration * (AYPosition[j] / RadiusA) + AJAcceleration * ((AYPosition[j] - JYPosition[j]) / Distance)
 
-        plt.plot(XPosition, YPosition)
+        JXVelocity += JXAcceleration * dT
+        JYVelocity += JYAcceleration * dT
 
-    Title = f"Orbit Simulation for dT = {dT} years"
-    plt.title(Title)
-    plt.ylabel("Position (au)")
-    plt.xlabel("Position (au)")
-    plt.axis('equal')
-    plt.grid()
-    # plt.show()
+        AXVelocity += AXAcceleration * dT
+        AYVelocity += AYAcceleration * dT
+
+        JXPosition[j+1] = JXPosition[j] + JXVelocity * dT
+        JYPosition[j+1] = JYPosition[j] + JYVelocity * dT
+        AXPosition[j+1] = AXPosition[j] + AXVelocity * dT
+        AYPosition[j+1] = AYPosition[j] + AYVelocity * dT
+
+    plt.plot(JXPosition, JYPosition)
+    plt.plot(AXPosition, AYPosition)
+    plt.show()
+
+print("Done")
