@@ -30,7 +30,8 @@ plt.title("Gravitational Force of the Sun on the Earth")
 plt.ylabel("Force (N)")
 plt.xlabel("Angle (rads)")
 plt.savefig(Directory + '/GForce_Sun_Earth')
-plt.show()
+plt.gcf().clf()
+# plt.show()
 
 OrbitalPeriod = 3.153 * (10**(7))
 OrbitalSpeed = (2 * np.pi * Au ) / OrbitalPeriod
@@ -92,7 +93,8 @@ for k in range(3):
     plt.axis('equal')
     plt.grid()
     plt.savefig(Directory + f'/1Body_Orbit_Euler_{Steps}_Steps')
-    plt.show()
+    plt.gcf().clf()
+    # plt.show()
 
 
 # Euler-Richardson
@@ -152,6 +154,7 @@ for k in range(3):
     plt.axis('equal')
     plt.grid()
     plt.savefig(Directory + f'/1Body_Orbit_Euler-Richardson_{Steps}_Steps')
+    plt.gcf().clf()
     # plt.show()
 
     
@@ -202,7 +205,8 @@ for k in range(3):
     plt.axis('equal')
     plt.grid()
     plt.savefig(Directory + f'/1Body_Orbit_Verlet_{Steps}_Steps')
-    plt.show()
+    # plt.show()
+    plt.gcf().clf()
 
 
 
@@ -251,6 +255,6 @@ for k in range(3):
     plt.axis('equal')
     plt.grid()
     plt.savefig(Directory + '/Earth_Orbit_Decreased_Velocity')
-    plt.show()
+    # plt.show()
 
 print("Done")
