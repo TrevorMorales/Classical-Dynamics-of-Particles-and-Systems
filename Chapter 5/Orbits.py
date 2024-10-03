@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+
+Directory = os.path.dirname(__file__)
 
 SunMass = 1.989 * (10**(30))
 EarthMass = 5.9722 * (10**(24))
@@ -26,7 +29,8 @@ plt.plot(Angle, YForce)
 plt.title("Gravitational Force of the Sun on the Earth")
 plt.ylabel("Force (N)")
 plt.xlabel("Angle (rads)")
-# plt.show()
+plt.savefig(Directory + '/GForce_Sun_Earth')
+plt.show()
 
 OrbitalPeriod = 3.153 * (10**(7))
 OrbitalSpeed = (2 * np.pi * Au ) / OrbitalPeriod
@@ -81,14 +85,14 @@ for k in range(3):
 
         plt.plot(XPosition, YPosition)
 
-    Title = f"Orbit Simulation for dT = {dT} years"
+    Title = f"Independent Orbit Simulation for dT = {dT} Years @ {Steps} Step Size"
     plt.title(Title)
     plt.ylabel("Position (au)")
     plt.xlabel("Position (au)")
     plt.axis('equal')
     plt.grid()
-    # plt.show()
-
+    plt.savefig(Directory + f'/1Body_Orbit_Euler_{Steps}_Steps')
+    plt.show()
 
 
 # Euler-Richardson
@@ -141,12 +145,13 @@ for k in range(3):
 
         plt.plot(XPosition, YPosition)
 
-    Title = f"Euler-Richardson Orbit Simulation for dT = {dT} years"
+    Title = f"Euler-Richardson Orbit Simulation for dT = {dT} Years @ {Steps} Step Size"
     plt.title(Title)
     plt.ylabel("Position (au)")
     plt.xlabel("Position (au)")
     plt.axis('equal')
     plt.grid()
+    plt.savefig(Directory + f'/1Body_Orbit_Euler-Richardson_{Steps}_Steps')
     # plt.show()
 
     
@@ -190,13 +195,14 @@ for k in range(3):
 
         plt.plot(XPosition, YPosition)
 
-    Title = f"Verlet Orbit Simulation for dT = {dT} years"
+    Title = f"Verlet Orbit Simulation for dT = {dT} Years @ {Steps} Step Size"
     plt.title(Title)
     plt.ylabel("Position (au)")
     plt.xlabel("Position (au)")
     plt.axis('equal')
     plt.grid()
-    # plt.show()
+    plt.savefig(Directory + f'/1Body_Orbit_Verlet_{Steps}_Steps')
+    plt.show()
 
 
 
@@ -244,6 +250,7 @@ for k in range(3):
     plt.xlabel("Position (au)")
     plt.axis('equal')
     plt.grid()
+    plt.savefig(Directory + '/Earth_Orbit_Decreased_Velocity')
     plt.show()
 
 print("Done")

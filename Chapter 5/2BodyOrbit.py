@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+Directory = os.path.dirname(__file__)
 
 NaturalG = 39.54593914429025
 MassJ = 0.001
@@ -10,7 +13,7 @@ RadiusA = 3.0
 Steps = 10000000
 dT = 1.0/1000.0
 
-for i in range(1):
+for i in range(10):
     RadiusA = (3.0) + (i * 0.1)
 
     JXPosition, JYPosition, AXPosition, AYPosition = np.zeros(Steps), np.zeros(Steps), np.zeros(Steps), np.zeros(Steps)
@@ -54,6 +57,13 @@ for i in range(1):
 
     plt.plot(JXPosition, JYPosition)
     plt.plot(AXPosition, AYPosition)
-    plt.show()
+    R = str(3 + (i * 0.1))
+    plt.title(f"2 Body Orbit for Asteroid Radius = {R}")
+    plt.ylabel("Position (au)")
+    plt.xlabel("Position (au)")
+    plt.axis('equal')
+    plt.grid()
+    plt.savefig(Directory + (f'/2Body_Orbit_R{R}.png'))
+    plt.gcf().clf()
 
 print("Done")
